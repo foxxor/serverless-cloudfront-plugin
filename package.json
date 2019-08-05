@@ -1,0 +1,24 @@
+{
+  "name": "cloudfront-serverless-plugin",
+  "version": "0.0.10",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --recursive"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "Jorge Vargas <foxxor>",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "aws-sdk": "^2.496.0"
+  },
+  "devDependencies": {
+    "aws-sdk-mock": "^4.5.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "nock": "^10.0.2",
+    "sinon": "^7.3.2"
+  }
+}
