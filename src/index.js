@@ -73,7 +73,7 @@ class CloudfrontPlugin
         // Get the functions
         const functionNames   = this.serverless.service.getAllFunctions();
         const lambdaFunctions = await this.getLambdaFunctions( functionNames );
-        
+
         // Get the CF Distribution configuration
         this.serverless.cli.log(`Deploying lambda functions to CF Distribution: ${this.config.distributionId}`);
 
@@ -110,18 +110,26 @@ class CloudfrontPlugin
     /**
      * Gets the function version number
      * @param  {String} functionName
+     * @param  {String} paginationMarker
      * @return {Promise|Object}
      */
-    getLastestVersion( functionName )
+    getLastestVersion( functionName, paginationMarker )
     {
         const Lambda = this.getLambda();
 
         return new Promise( ( resolve, reject ) => 
         {
             const params = {
-                FunctionName: functionName, 
-                MaxItems    : 10000
+                FunctionName: functionName,
+                // This method paginates just up to 50 versions, even when the documentation says 10000
+                MaxItems: 50
             };
+
+            // If a pagination marker was passed to the function, include it to get the next page
+            if ( paginationMarker )
+            {
+                params.Marker = paginationMarker;
+            }
 
             Lambda.listVersionsByFunction( params, ( err, data ) =>
             {
@@ -131,8 +139,19 @@ class CloudfrontPlugin
                     return reject( err );
                 }
 
-                let lastVersion = data.Versions.pop();
+                // This means the versions are paginated
+                if ( data.NextMarker )
+                {
+                    // Recursively call this function but with the pagination marker
+                    return this.getLastestVersion( functionName, data.NextMarker )
+                    .then( lastVersion =>
+                        {
+                            resolve( lastVersion );
+                        }
+                    );
+                }
 
+                let lastVersion = data.Versions.pop();
                 this.serverless.cli.log( `Obtained lambda function latest version: ${lastVersion.Version}` );
                 return resolve( lastVersion );
             } );
