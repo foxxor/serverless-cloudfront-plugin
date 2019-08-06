@@ -13,8 +13,9 @@ If the CloudFront Distribution is in the same CloudFormation stack and is being 
 * Clone this repository
 * [Link using NPM](https://docs.npmjs.com/cli/link), the plugin to the project that will use it
 * In your `serverless.yml` file, configure the deployment rules of the lambda@edge functions on CloudFront.
-    ** Add the Plugin to the plugins configuration.
-    ** In the custom field, add a `cloudfront` object, and add the `distributionId` and the `behaviors` rules.
+    * Add the Plugin to the plugins configuration.
+    * In the custom field, add a `cloudfront` object, and add the `distributionId` and the `behaviors` rules.
+    * Use the same function name in the behaviors section, as specified in the functions configuration.
 ```
 service: my-awesome-service
 plugins:
