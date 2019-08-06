@@ -46,7 +46,7 @@ class CloudfrontPlugin
         if ( 'cloudfront' in this.custom )
         {
             if ( !( 'distributionId' in this.custom.cloudfront ) 
-                || !( 'behaviours'   in this.custom.cloudfront ) ) 
+                || !( 'behaviors'   in this.custom.cloudfront ) ) 
             {
                 throw Error( `${this.constructor.name}: Missing one or more configuration values.` );
             }
@@ -229,9 +229,9 @@ class CloudfrontPlugin
             let behavior = distributionConfig.CacheBehaviors.Items[ index ];
 
             // Check if the current behaviour matches the behaviours in the configuration
-            if ( this.config.behaviours[ behavior.PathPattern ] )
+            if ( this.config.behaviors[ behavior.PathPattern ] )
             {
-                const behaviorEvents     = this.config.behaviours[ behavior.PathPattern ];
+                const behaviorEvents     = this.config.behaviors[ behavior.PathPattern ];
                 const lambdaAssociations = this.createDistributionLambdaAssociations( behaviorEvents, lambdaFunctions );
 
                 if ( lambdaAssociations.length )
