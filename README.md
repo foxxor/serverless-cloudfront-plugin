@@ -1,5 +1,6 @@
 # Serverless CloudFront - Lambda@edge Plugin
 
+[![NPM version][npm-image]][npm-url]
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
 
 This is a Serverless Framework Plugin to easily deploy Lambda@Edge functions to an existing CloudFront Distribution. This Plugin doesn't require the CloudFront Distribution to be under the same CloudFormation Stack. But it does require for the Serverless user role to have permissions to modify the target Distribution.
@@ -55,3 +56,10 @@ custom:
 
 * Allow to pass other Cloudfront behavior configurations
 * Auto-create behaviors if they don't exist
+
+## License
+
+MIT
+
+[npm-image]: https://badge.fury.io/js/serverless-cloudfront-plugin.svg
+[npm-url]: https://npmjs.com/package/serverless-cloudfront-plugin

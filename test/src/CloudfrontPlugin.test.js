@@ -16,6 +16,7 @@ describe('CloudfrontPlugin', () =>
         const serverlessMock = {
             service: {
                 provider: {
+                    name: 'aws',
                     region: 'us-east-1'
                 },
                 custom: {
@@ -72,6 +73,7 @@ describe('CloudfrontPlugin', () =>
         const serverlessMock = {
             service: {
                 provider: {
+                    name: 'aws',
                     region: 'us-east-1'
                 },
                 custom: {
@@ -111,5 +113,52 @@ describe('CloudfrontPlugin', () =>
 
         // Restore the original methods to avoid other tests from failing
         connectorMock.verify();
+    } );
+
+    it( 'Tests the configuration checks work.', async () => 
+    {
+        const serverlessMissingProvider = {
+            service: {
+                provider: {
+                    region: 'us-east-1'
+                },
+                custom: {
+                    cloudfront: {
+                        distributionId: 'ABC1234DEF',
+                        behaviors: {}
+                    }
+                }
+            }
+        };
+        const plugin = new CloudfrontPlugin( serverlessMissingProvider, {} );
+
+        try {
+            await plugin.getConfiguration();
+            assert.fail( 'This should have thrown an exception' );
+        }
+        catch( err ) {
+            assert( true, 'Exception from the validation' );
+        }
+
+        const serverlessMissingCFConfig = {
+            service: {
+                provider: {
+                    name: 'aws',
+                    region: 'us-east-1'
+                },
+                custom: {
+                    cloudfront: {}
+                }
+            }
+        };
+        const plugin2 = new CloudfrontPlugin( serverlessMissingCFConfig, {} );
+
+        try {
+            await plugin2.getConfiguration();
+            assert.fail( 'This should have thrown an exception' );
+        } 
+        catch( err ) {
+            assert( true, 'Exception from the validation' );
+        } 
     } );
 } );

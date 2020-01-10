@@ -41,6 +41,12 @@ class CloudfrontPlugin
             }
         }
 
+        const provider = this.serverless.service.provider;
+        if ( provider.name !== 'aws' )
+        {
+            throw Error( `${this.constructor.name}: This plugin only supports the aws provider.` );
+        }
+
         this.config = this.custom.cloudfront;
     }
 

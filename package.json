@@ -1,16 +1,27 @@
 {
   "name": "serverless-cloudfront-plugin",
-  "version": "0.2.0",
+  "version": "0.2.1",
+  "description": "Serverless Framework Plugin to easily deploy Lambda@Edge functions to an existing CloudFront Distribution",
   "main": "src/CloudfrontPlugin.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/foxxor/serverless-cloudfront-plugin.git"
   },
   "author": "Jorge Vargas <foxxor>",
   "license": "MIT",
-  "description": "",
+  "keywords": [
+    "serverless plugin cloudfront lambda edge",
+    "serverless framework",
+    "cloudfront",
+    "Lambda@Edge"
+  ],
+  "bugs": {
+    "url": "https://github.com/foxxor/serverless-cloudfront-plugin/issues"
+  },
+  "homepage": "https://github.com/foxxor/serverless-cloudfront-plugin",
   "dependencies": {
     "aws-sdk": "^2.600.0"
   },

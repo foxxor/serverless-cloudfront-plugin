@@ -168,37 +168,9 @@
                 ]
               },
               "QueryStringCacheKeys": {
-                "Quantity": 29,
+                "Quantity": 1,
                 "Items": [
-                  "cat",
-                  "code",
-                  "cur",
-                  "datasources",
-                  "discount",
-                  "discount_message",
-                  "discount_timer",
-                  "from",
-                  "id",
-                  "lang",
-                  "layout",
-                  "orientation",
-                  "pagecount",
-                  "product",
-                  "project_id",
-                  "project_name",
-                  "selection",
-                  "skip_lang",
-                  "skip_layout",
-                  "skip_orientation",
-                  "skip_pagecount",
-                  "skip_product",
-                  "skip_selection",
-                  "steps",
-                  "theme",
-                  "to",
-                  "try_skip_fb_connect",
-                  "try_skip_project_photo",
-                  "yearbookcampaign"
+                  "id"
                 ]
               }
             },
