@@ -1,0 +1,83 @@
+{
+  "NextMarker": null,
+  "Versions": [
+    {
+      "FunctionName": "my-awesome-function",
+      "FunctionArn": "arn:aws:lambda:us-east-1:1234567890:function:my-awesome-function:1",
+      "Runtime": "nodejs12.x",
+      "Role": "arn:aws:iam::1234567890:role/aws-exec-role",
+      "Handler": "my-awesome-function.run",
+      "CodeSize": 123456,
+      "Description": "My Awesome Lambda function",
+      "Timeout": 1,
+      "MemorySize": 128,
+      "LastModified": "2019-07-26T08:44:15.413+0000",
+      "CodeSha256": "ABCDertyuiop1234=",
+      "Version": "1",
+      "KMSKeyArn": null,
+      "TracingConfig": {
+        "Mode": "PassThrough"
+      },
+      "MasterArn": null,
+      "RevisionId": "019fe8b3-5296-4284-8d12-5595faabe7ef",
+      "State": null,
+      "StateReason": null,
+      "StateReasonCode": null,
+      "LastUpdateStatus": null,
+      "LastUpdateStatusReason": null,
+      "LastUpdateStatusReasonCode": null
+    },
+    {
+     "FunctionName": "my-awesome-function",
+      "FunctionArn": "arn:aws:lambda:us-east-1:1234567890:function:my-awesome-function:2",
+      "Runtime": "nodejs12.x",
+      "Role": "arn:aws:iam::1234567890:role/aws-exec-role",
+      "Handler": "my-awesome-function.run",
+      "CodeSize": 123456,
+      "Description": "My Awesome Lambda function",
+      "Timeout": 1,
+      "MemorySize": 128,
+      "LastModified": "2019-07-30T15:07:43.871+0000",
+      "CodeSha256": "ABCDertyuiop1235=",
+      "Version": "2",
+      "KMSKeyArn": null,
+      "TracingConfig": {
+        "Mode": "PassThrough"
+      },
+      "MasterArn": null,
+      "RevisionId": "5bee008e-0a32-41fd-b516-65a5a248aa73",
+      "State": null,
+      "StateReason": null,
+      "StateReasonCode": null,
+      "LastUpdateStatus": null,
+      "LastUpdateStatusReason": null,
+      "LastUpdateStatusReasonCode": null
+    },
+    {
+      "FunctionName": "my-awesome-function",
+      "FunctionArn": "arn:aws:lambda:us-east-1:1234567890:function:my-awesome-function:3",
+      "Runtime": "nodejs12.x",
+      "Role": "arn:aws:iam::1234567890:role/aws-exec-role",
+      "Handler": "my-awesome-function.run",
+      "CodeSize": 123456,
+      "Description": "My Awesome Lambda function",
+      "Timeout": 1,
+      "MemorySize": 256,
+      "LastModified": "2019-08-01T14:56:06.052+0000",
+      "CodeSha256": "ABCDertyuiop1236=",
+      "Version": "3",
+      "KMSKeyArn": null,
+      "TracingConfig": {
+        "Mode": "PassThrough"
+      },
+      "MasterArn": null,
+      "RevisionId": "5a916fa0-7f3e-4a68-9c5c-be927fc0839c",
+      "State": null,
+      "StateReason": null,
+      "StateReasonCode": null,
+      "LastUpdateStatus": null,
+      "LastUpdateStatusReason": null,
+      "LastUpdateStatusReasonCode": null
+    }
+  ]
+}
