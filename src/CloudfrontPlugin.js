@@ -62,7 +62,8 @@ class CloudfrontPlugin
         if ( this.config === undefined 
             || Object.keys( this.config ).length == 0 
             || !this.config.distributionId
-            || Object.keys( this.config.behaviors ).length == 0 )
+            || !this.config.behaviors
+            || this.config.behaviors.length == 0 )
         {
             this.serverless.cli.log( `${this.constructor.name}: No configuration found. Continuing without any changes.` )
             return;

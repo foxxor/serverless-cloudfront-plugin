@@ -79,7 +79,7 @@ describe('CloudfrontPlugin', () =>
                 custom: {
                     cloudfront: {
                         distributionId: 'ABC1234DEF',
-                        behaviors: {}
+                        behaviors: []
                     }
                 },
                 getAllFunctions: () => 
