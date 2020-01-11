@@ -25,9 +25,9 @@ Or
 ### How to use?
 
 In your `serverless.yml` file, configure the deployment rules of the lambda@edge functions on CloudFront.
-    * Add the Plugin to the plugins configuration.
-    * In the custom field, add a `cloudfront` object, and add the `distributionId` and the `behaviors` rules.
-    * Use the same function name in the behaviors section, as specified in the functions configuration.
+* Add the Plugin to the plugins configuration.
+* In the custom field, add a `cloudfront` object, and add the `distributionId` and the `behaviors` rules.
+* Use the same function name in the behaviors section, as specified in the functions configuration.
 ```
 service: my-awesome-service
 plugins:
@@ -56,7 +56,7 @@ custom:
       foo/bar/lol:
         lambdaAssociations:
           viewerRequest : function1
-      foo:
+      foo/*:
         cookies:
          - cookie3
         lambdaAssociations:
