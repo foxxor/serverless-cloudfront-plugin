@@ -9,11 +9,22 @@ If the CloudFront Distribution is in the same CloudFormation stack and is being 
 
 **Note: In it's current state this plugin overwrites the Lambda Associations and the whitelisted cookies if configured. Please take this into account to prevent overwriting previous configurations.**
 
-### How to use?
+### Installation
+
+Install using NPM:
+
+```
+$ npm install serverless-cloudfront-plugin
+```
+
+Or
 
 * Clone this repository
 * [Link using NPM](https://docs.npmjs.com/cli/link), the plugin to the project that will use it
-* In your `serverless.yml` file, configure the deployment rules of the lambda@edge functions on CloudFront.
+
+### How to use?
+
+In your `serverless.yml` file, configure the deployment rules of the lambda@edge functions on CloudFront.
     * Add the Plugin to the plugins configuration.
     * In the custom field, add a `cloudfront` object, and add the `distributionId` and the `behaviors` rules.
     * Use the same function name in the behaviors section, as specified in the functions configuration.
