@@ -9,7 +9,7 @@ If the CloudFront Distribution is in the same CloudFormation stack and is being 
 
 **Note: In it's current state this plugin overwrites the Lambda Associations and the whitelisted cookies if configured. Please take this into account to prevent overwriting previous configurations.**
 
-### Installation
+## Installation
 
 Install as a Dev. Dependency using NPM:
 
@@ -22,7 +22,7 @@ Or manually link the plugin project to your project:
 * Clone this repository
 * [Link the plugin using NPM](https://docs.npmjs.com/cli/link) to your project
 
-### How to use?
+## How to use?
 
 In your `serverless.yml` file, configure the deployment rules of the Lambda@Edge functions on CloudFront.
 1. Add the Plugin to the plugins configuration.
@@ -63,7 +63,7 @@ custom:
           viewerResponse: function2
 ```
 
-### To-Do
+## To-Do
 
 * Allow to pass other Cloudfront behavior configurations
     * Headers
