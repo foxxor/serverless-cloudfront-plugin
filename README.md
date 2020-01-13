@@ -11,24 +11,24 @@ If the CloudFront Distribution is in the same CloudFormation stack and is being 
 
 ### Installation
 
-Install using NPM:
+Install as a Dev. Dependency using NPM:
 
 ```
-$ npm install serverless-cloudfront-plugin
+$ npm install --save-dev serverless-cloudfront-plugin
 ```
 
-Or
+Or manually link the plugin project to your project:
 
 * Clone this repository
-* [Link using NPM](https://docs.npmjs.com/cli/link), the plugin to the project that will use it
+* [Link the plugin using NPM](https://docs.npmjs.com/cli/link) to your project
 
 ### How to use?
 
-In your `serverless.yml` file, configure the deployment rules of the lambda@edge functions on CloudFront.
-* Add the Plugin to the plugins configuration.
-* In the custom field, add a `cloudfront` object, and add the `distributionId` and the `behaviors` rules.
-* Use the same function name in the behaviors section, as specified in the functions configuration.
-```
+In your `serverless.yml` file, configure the deployment rules of the Lambda@Edge functions on CloudFront.
+1. Add the Plugin to the plugins configuration.
+2. In the custom field, add a `cloudfront` object, with a `distributionId` and `behaviors` fields.
+3. Use the same function name in the behaviors section, as specified in the functions configuration.
+```yaml
 service: my-awesome-service
 plugins:
   ...
@@ -66,7 +66,10 @@ custom:
 ### To-Do
 
 * Allow to pass other Cloudfront behavior configurations
-* Auto-create behaviors if they don't exist
+    * Headers
+    * Query strings
+    * Etc.
+* Specify multiple distributions
 
 ## License
 
