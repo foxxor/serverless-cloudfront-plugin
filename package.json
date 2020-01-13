@@ -1,6 +1,6 @@
 {
   "name": "serverless-cloudfront-plugin",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Serverless Framework Plugin to easily deploy Lambda@Edge functions to an existing CloudFront Distribution",
   "main": "src/CloudfrontPlugin.js",
   "scripts": {
