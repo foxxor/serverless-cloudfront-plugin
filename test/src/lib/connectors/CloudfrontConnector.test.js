@@ -80,6 +80,9 @@ describe('CloudfrontConnector', () =>
             },
             'my-other-awesome-function': {
                 FunctionArn: 'arn:aws:lambda:us-west-2:123456789012:function:OtherAwesomeFunction'
+            },
+            'my-other-awesome-default-function': {
+                FunctionArn: 'arn:aws:lambda:us-west-2:123456789012:function:OtherAwesomeDefaultFunction'
             }
         };
 
@@ -97,10 +100,19 @@ describe('CloudfrontConnector', () =>
                     viewerResponse: 'my-other-awesome-function',
                 }
             },
+            'DefaultCacheBehavior': {
+                // No cookies,
+                lambdaAssociations: {
+                    originResponse: 'my-other-awesome-default-function',
+                }
+            },
         };
 
         let newDistributionConfig = connector.addNewConfigToDistribution( distribution.Distribution.DistributionConfig, 
             lambdaFunctions, behaviorsConfig );
+
+        assert.equal( newDistributionConfig.DefaultCacheBehavior.LambdaFunctionAssociations.Items.length, 1 );
+        assert.equal( newDistributionConfig.DefaultCacheBehavior.LambdaFunctionAssociations.Quantity, 1 );
 
         assert.equal( newDistributionConfig.CacheBehaviors.Items[0].LambdaFunctionAssociations.Items.length, 2 );
         assert.equal( newDistributionConfig.CacheBehaviors.Items[0].LambdaFunctionAssociations.Quantity, 2 );

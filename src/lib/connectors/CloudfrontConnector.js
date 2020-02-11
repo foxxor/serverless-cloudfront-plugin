@@ -77,6 +77,29 @@ class CloudfrontConnector
      */
     addNewConfigToDistribution( distributionConfig, lambdaFunctions, behaviorsConfig )
     {
+        function extracted(behaviorConfig, cacheBehavior) {
+            // If disable was passed, then delete all the lambda associations and the whitelisted cookies
+            if ('disable' in behaviorConfig) {
+                return this.setDisabledCacheBehavior(cacheBehavior);
+            }
+
+            // Check if the current behaviour contains lambda associations
+            if ('lambdaAssociations' in behaviorConfig) {
+                cacheBehavior = this.setCacheBehaviorLambdaAssociations( cacheBehavior, behaviorConfig.lambdaAssociations, lambdaFunctions);
+            }
+
+            // Check if the current behaviour contains cookies to whitelist
+            if ('cookies' in behaviorConfig) {
+                cacheBehavior = this.setCacheBehaviorCookies(cacheBehavior, behaviorConfig.cookies);
+            }
+
+            return cacheBehavior;
+        }
+
+        if (behaviorsConfig.DefaultCacheBehavior) {
+            distributionConfig.DefaultCacheBehavior = extracted.call(this, behaviorsConfig.DefaultCacheBehavior, distributionConfig.DefaultCacheBehavior);
+        }
+
         for ( let index in distributionConfig.CacheBehaviors.Items )
         {
             let behavior = distributionConfig.CacheBehaviors.Items[ index ];
@@ -86,28 +109,7 @@ class CloudfrontConnector
             {
                 const behaviorConfig = behaviorsConfig[ behavior.PathPattern ];
 
-                // If disable was passed, then delete all the lambda associations and the whitelisted cookies
-                if ( 'disable' in behaviorConfig )
-                {
-                    distributionConfig.CacheBehaviors.Items[ index ] = this.setDisabledCacheBehavior( 
-                        distributionConfig.CacheBehaviors.Items[ index ] );
-                }
-                else 
-                {
-                    // Check if the current behaviour contains lambda associations
-                    if ( 'lambdaAssociations' in behaviorConfig )
-                    {
-                        distributionConfig.CacheBehaviors.Items[ index ] = this.setCacheBehaviorLambdaAssociations( 
-                            distributionConfig.CacheBehaviors.Items[ index ], behaviorConfig.lambdaAssociations, lambdaFunctions );
-                    }
-
-                    // Check if the current behaviour contains cookies to whitelist
-                    if ( 'cookies' in behaviorConfig )
-                    {
-                        distributionConfig.CacheBehaviors.Items[ index ] = this.setCacheBehaviorCookies( 
-                            distributionConfig.CacheBehaviors.Items[ index ],  behaviorConfig.cookies );
-                    }
-                }
+                distributionConfig.CacheBehaviors.Items[index] = extracted.call(this, behaviorConfig, distributionConfig.CacheBehaviors.Items[index]);
             }
         }
 
@@ -139,7 +141,7 @@ class CloudfrontConnector
 
         if ( lambdaAssociations.length )
         {
-            console.log( `Adding lambda associations for behaviour '${cacheBehavior.PathPattern}'` );
+            console.log( `Adding lambda associations for '${ this.getBehaviorNameForLog(cacheBehavior) }'` );
 
             cacheBehavior.LambdaFunctionAssociations.Quantity = lambdaAssociations.length;
             cacheBehavior.LambdaFunctionAssociations.Items    = lambdaAssociations;
@@ -158,7 +160,7 @@ class CloudfrontConnector
     {
         if ( behaviorCookies.length )
         {
-            console.log( `Adding whitelisted cookies for behaviour '${cacheBehavior.PathPattern}'` );
+            console.log( `Adding whitelisted cookies for '${this.getBehaviorNameForLog(cacheBehavior)}'` );
 
             let cookiesConfig = {
                 Forward: CF_COOKIE_FORWARD_VALUES['whitelist'],
@@ -198,6 +200,21 @@ class CloudfrontConnector
 
         return cacheBehavior;
     }
+
+    /**
+     * Sets the Whitelisted cookies for the Distribution's Cache Behavior
+     * @param  {Object} cacheBehavior
+     * @return {String}
+     */
+    getBehaviorNameForLog(cacheBehavior)
+    {
+        if (cacheBehavior.PathPattern) {
+            return `behavior ${cacheBehavior.PathPattern}`;
+        }
+
+        return 'DefaultCacheBehavior'
+    }
+
 }
 
 module.exports = CloudfrontConnector;
