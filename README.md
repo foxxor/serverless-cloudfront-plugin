@@ -61,6 +61,9 @@ custom:
          - cookie3
         lambdaAssociations:
           viewerResponse: function2
+      DefaultCacheBehavior:
+        lambdaAssociations:
+          viewerResponse: function3
 ```
 
 ## To-Do

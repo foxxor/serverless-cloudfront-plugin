@@ -67,7 +67,7 @@ describe('CloudfrontConnector', () =>
         assert.equal( cacheBehavior.LambdaFunctionAssociations.Items[1].LambdaFunctionARN, 
             lambdaFunctions['origin-request'].FunctionArn );
         assert.equal( cacheBehavior.LambdaFunctionAssociations.Items[1].EventType, 'origin-request' );
-    } );    
+    } );
 
     it( 'Tests the distribution is updated with new configuration', async () => 
     {
@@ -80,9 +80,6 @@ describe('CloudfrontConnector', () =>
             },
             'my-other-awesome-function': {
                 FunctionArn: 'arn:aws:lambda:us-west-2:123456789012:function:OtherAwesomeFunction'
-            },
-            'my-other-awesome-default-function': {
-                FunctionArn: 'arn:aws:lambda:us-west-2:123456789012:function:OtherAwesomeDefaultFunction'
             }
         };
 
@@ -99,20 +96,14 @@ describe('CloudfrontConnector', () =>
                 lambdaAssociations: {
                     viewerResponse: 'my-other-awesome-function',
                 }
-            },
-            'DefaultCacheBehavior': {
-                // No cookies,
-                lambdaAssociations: {
-                    originResponse: 'my-other-awesome-default-function',
-                }
-            },
+            }
         };
 
         let newDistributionConfig = connector.addNewConfigToDistribution( distribution.Distribution.DistributionConfig, 
             lambdaFunctions, behaviorsConfig );
 
-        assert.equal( newDistributionConfig.DefaultCacheBehavior.LambdaFunctionAssociations.Items.length, 1 );
-        assert.equal( newDistributionConfig.DefaultCacheBehavior.LambdaFunctionAssociations.Quantity, 1 );
+        assert.equal( newDistributionConfig.DefaultCacheBehavior.LambdaFunctionAssociations.Items.length, 0 );
+        assert.equal( newDistributionConfig.DefaultCacheBehavior.LambdaFunctionAssociations.Quantity, 0 );
 
         assert.equal( newDistributionConfig.CacheBehaviors.Items[0].LambdaFunctionAssociations.Items.length, 2 );
         assert.equal( newDistributionConfig.CacheBehaviors.Items[0].LambdaFunctionAssociations.Quantity, 2 );
@@ -123,6 +114,48 @@ describe('CloudfrontConnector', () =>
         assert.equal( newDistributionConfig.CacheBehaviors.Items[1].LambdaFunctionAssociations.Items.length, 1 );
         assert.equal( newDistributionConfig.CacheBehaviors.Items[1].LambdaFunctionAssociations.Quantity, 1 );
         assert.notExists( newDistributionConfig.CacheBehaviors.Items[1].ForwardedValues.Cookies.WhitelistedNames );
+    } );
+
+    it( 'Tests the distribution is updated with new configuration, with a default cache behaviour', async () => 
+    {
+        const connector    = new CloudfrontConnector();
+        const distribution = require('../../../fixtures/cloudfront_distribution_data.json');
+
+        let lambdaFunctions = {
+            'my-awesome-function': {
+                FunctionArn: 'arn:aws:lambda:us-west-2:123456789012:function:MyAwesomeFunction'
+            },
+            'my-other-awesome-default-function': {
+                FunctionArn: 'arn:aws:lambda:us-west-2:123456789012:function:OtherAwesomeDefaultFunction'
+            }
+        };
+
+        const behaviorsConfig = {
+            '/pages_contents/*': {
+                cookies: [ 'oatmeal_cookie', 'chocolate-cookie' ],
+                lambdaAssociations: {
+                    originRequest : 'my-awesome-function'
+                }
+            },
+            'DefaultCacheBehavior': {
+                // No cookies,
+                lambdaAssociations: {
+                    originResponse: 'my-other-awesome-default-function'
+                }
+            }
+        };
+
+        let newDistributionConfig = connector.addNewConfigToDistribution( distribution.Distribution.DistributionConfig, 
+            lambdaFunctions, behaviorsConfig );
+
+        assert.equal( newDistributionConfig.DefaultCacheBehavior.LambdaFunctionAssociations.Items.length, 1 );
+        assert.equal( newDistributionConfig.DefaultCacheBehavior.LambdaFunctionAssociations.Quantity, 1 );
+
+        assert.equal( newDistributionConfig.CacheBehaviors.Items[0].LambdaFunctionAssociations.Items.length, 1 );
+        assert.equal( newDistributionConfig.CacheBehaviors.Items[0].LambdaFunctionAssociations.Quantity, 1 );
+        assert.equal( newDistributionConfig.CacheBehaviors.Items[0].ForwardedValues.Cookies.WhitelistedNames.Items.length, 2 );
+        assert.equal( newDistributionConfig.CacheBehaviors.Items[0].ForwardedValues.Cookies.WhitelistedNames.Quantity, 2 );
+        assert.equal( newDistributionConfig.CacheBehaviors.Items[0].ForwardedValues.Cookies.Forward, 'whitelist' );
     } );  
 
     it( 'Tests the distribution configuration is deleted if the disable is passed', async () => 

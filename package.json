@@ -1,6 +1,6 @@
 {
   "name": "serverless-cloudfront-plugin",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Serverless Framework Plugin to easily deploy Lambda@Edge functions to an existing CloudFront Distribution",
   "main": "src/CloudfrontPlugin.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/foxxor/serverless-cloudfront-plugin",
   "dependencies": {
-    "aws-sdk": "^2.600.0"
+    "aws-sdk": "^2.615.0"
   },
   "devDependencies": {
     "aws-sdk-mock": "^4.5.0",
